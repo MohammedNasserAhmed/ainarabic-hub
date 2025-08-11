@@ -29,7 +29,7 @@ function App() {
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Home />} />
             <Route path="/activities" element={<Activities />} />
-            <Route path="src/pages/Portfolio" element={<Portfolio />} />
+            <Route path="/Portfolio" element={<Portfolio />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/research" element={<Research />} />
