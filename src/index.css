@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --light-primary: #FFFFFF;
+    --light-secondary: #F3F4F6;
+    --light-text-primary: #1F2937;
+    --light-text-secondary: #4B5563;
+    --light-accent: #D97706;
+    --light-accent-hover: #B45309;
+
+    --dark-primary: #111827;
+    --dark-secondary: #1F2937;
+    --dark-text-primary: #F9FAFB;
+    --dark-text-secondary: #D1D5DB;
+    --dark-accent: #F59E0B;
+    --dark-accent-hover: #FB923C;
+  }
+
+  body {
+    @apply bg-light-primary text-light-text-primary dark:bg-dark-primary dark:text-dark-text-primary;
+    @apply transition-colors duration-300;
+  }
+}
