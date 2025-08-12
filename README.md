@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="public/website-logo.png" alt="aiNarabic Logo" width="150">
+  <img src="public/website_logo.png" alt="aiNarabic Logo" width="150">
   <h1><b>aiNarabic Website</b></h1>
   <p>
     <b>A state-of-the-art, animated, and production-ready platform for AI innovation, built with a modern React stack.</b>
@@ -12,12 +12,12 @@
     <img src="https://img.shields.io/badge/Tailwind_CSS-3-blueviolet?logo=tailwind-css" alt="Tailwind CSS">
     <img src="https://img.shields.io/badge/Framer_Motion-Animated-black?logo=framer" alt="Framer Motion">
     <a href="https://github.com/MohammedNasserAhmed/ainarabic-website/actions">
-      <img src="public/website-screenshot.png" alt="CI/CD Status">
+      <img src="https://github.com/MohammedNasserAhmed/ainarabic-website/actions/workflows/deploy.yml/badge.svg" alt="CI/CD Status">
     </a>
   </p>
 </div>
 
-![aiNarabic Website Screenshot](https://placehold.co/1200x600/1F2937/FFFFFF?text=aiNarabic+Website+Preview)
+![aiNarabic Website Screenshot](public/website-screenshot.png)
 
 ---
 
@@ -117,4 +117,3 @@ Contributions are what make the open-source community such an amazing place to l
 ## 📜 License
 
 Distributed under the MIT License. See `LICENSE` for more information.
-
