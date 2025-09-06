@@ -58,7 +58,7 @@ This repository contains the complete source code for the website, which is a Si
 
 <!-- TODO: Add a screenshot or GIF of the project -->
 <div align="center">
-  <img src="https://via.placeholder.com/800x450.png/2d333b/FFFFFF/?text=Project+Screenshot" alt="Project Screenshot" width="80%">
+  <img src="assets/website-screenshot.png" alt="Project Screenshot" width="80%">
 </div>
 
 ### ✨ Features
