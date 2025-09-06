@@ -7,7 +7,7 @@
 
 <div align="center">
   <!-- TODO: Replace with your logo -->
-  <img src="https://via.placeholder.com/150" alt="AinArabic Logo" width="100" height="100">
+  <img src="assets/website_logo.png" alt="aiNarabic Logo" width="100" height="100">
   <h1 align="center">aiNarabic Website</h1>
   <p align="center">
     A modern, responsive, and feature-rich website for "aiNarabic" startup, built with the latest web technologies.
