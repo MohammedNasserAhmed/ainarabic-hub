@@ -8,16 +8,16 @@
 <div align="center">
   <!-- TODO: Replace with your logo -->
   <img src="https://via.placeholder.com/150" alt="AinArabic Logo" width="100" height="100">
-  <h1 align="center">AinArabic Website</h1>
+  <h1 align="center">aiNarabic Website</h1>
   <p align="center">
-    A modern, responsive, and feature-rich website for "AI in Arabic" (عين بالعربي), built with the latest web technologies.
+    A modern, responsive, and feature-rich website for "aiNarabic" startup, built with the latest web technologies.
     <br />
     <a href="https://ainarabic.com"><strong>Explore the site »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/your-username/ainarabic-website/issues">Report Bug</a>
+    <a href="https://github.com/MohammedNasserAhmed/ainarabic-website/issues">Report Bug</a>
     ·
-    <a href="https://github.com/your-username/ainarabic-website/issues">Request Feature</a>
+    <a href="https://github.com/MohammedNasserAhmed/ainarabic-website/issues">Request Feature</a>
   </p>
 </div>
 
@@ -25,7 +25,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![Vercel Deployment](https://img.shields.io/badge/Vercel-Deployed-black?style=for-the-badge&logo=vercel)](https://ainarabic-website.vercel.app/) <!-- TODO: Replace with your Vercel deployment link -->
-[![Contributions Welcome](https://img.shields.io/badge/Contributions-welcome-brightgreen.svg?style=for-the-badge)](https://github.com/your-username/ainarabic-website/pulls)
+[![Contributions Welcome](https://img.shields.io/badge/Contributions-welcome-brightgreen.svg?style=for-the-badge)](https://github.com/MohammedNasserAhmed/ainarabic-website/pulls)
 
 </div>
 
