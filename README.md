@@ -52,7 +52,7 @@
 
 ## 📖 About The Project
 
-The **aiNrabic Website** is the official web presence for the "aiNarabic" initiative. It's designed to be a central hub for the Arabic-speaking community to explore the world of Artificial Intelligence. The platform is built from the ground up using a modern, performant, and scalable tech stack.
+The **aiNarabic Website** is the official web presence for the "aiNarabic" initiative. It's designed to be a central hub for the Arabic-speaking community to explore the world of Artificial Intelligence. The platform is built from the ground up using a modern, performant, and scalable tech stack.
 
 This repository contains the complete source code for the website, which is a Single Page Application (SPA) built with React and Vite.
 
