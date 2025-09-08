@@ -39,6 +39,14 @@ const Blog = () => {
       <Helmet>
         <title>Blog | aiNarabic</title>
         <meta name="description" content="Read the latest articles, insights, and news from the aiNarabic team on AI, machine learning, and technology." />
+        <script type="application/ld+json">{JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: typeof window !== 'undefined' ? window.location.origin : '' },
+            { '@type': 'ListItem', position: 2, name: 'Blog', item: typeof window !== 'undefined' ? window.location.href : '' }
+          ]
+        })}</script>
       </Helmet>
       <div className="fixed top-0 left-0 right-0 h-1 z-40 bg-transparent" aria-hidden>
         <div className="h-full bg-light-accent dark:bg-dark-accent origin-left transition-transform" style={{ transform: `scaleX(${progress/100})` }} />

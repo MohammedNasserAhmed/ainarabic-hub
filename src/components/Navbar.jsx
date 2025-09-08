@@ -1,5 +1,5 @@
 // src/components/Navbar.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
@@ -11,6 +11,8 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { theme } = useTheme();
+  const menuRef = useRef(null);
+  const openButtonRef = useRef(null);
   const location = useLocation();
 
   useEffect(() => {
@@ -26,6 +28,35 @@ const Navbar = () => {
   ];
 
   const activeLinkStyle = { color: theme === 'dark' ? '#F59E0B' : '#D97706' };
+
+  const closeMenu = useCallback(() => setIsOpen(false), []);
+  // Close on route change
+  useEffect(() => { closeMenu(); }, [location.pathname, closeMenu]);
+  // ESC key
+  useEffect(() => {
+    if (!isOpen) return;
+    const handler = (e) => { if (e.key === 'Escape') { e.preventDefault(); closeMenu(); openButtonRef.current?.focus(); } };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [isOpen, closeMenu]);
+  // Focus trap
+  useEffect(() => {
+    if (!isOpen) return;
+    const node = menuRef.current;
+    if (!node) return;
+    const focusable = node.querySelectorAll('a,button');
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    first && first.focus();
+    const trap = (e) => {
+      if (e.key === 'Tab') {
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    };
+    node.addEventListener('keydown', trap);
+    return () => node.removeEventListener('keydown', trap);
+  }, [isOpen]);
 
   return (
     <motion.nav
@@ -74,29 +105,50 @@ const Navbar = () => {
           </div>
           <div className="md:hidden flex items-center">
             <ThemeToggle />
-            <button onClick={() => setIsOpen(!isOpen)} className="ml-4 text-light-text-primary dark:text-dark-text-primary">
+            <button ref={openButtonRef} aria-expanded={isOpen} aria-controls="mobile-menu" aria-label="Toggle navigation" onClick={() => setIsOpen(!isOpen)} className="ml-4 text-light-text-primary dark:text-dark-text-primary focus-ring">
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
       </div>
-      {isOpen && (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="md:hidden bg-light-secondary dark:bg-dark-secondary pb-4">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col space-y-4">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className="font-medium text-light-text-secondary dark:text-dark-text-secondary hover:text-light-accent dark:hover:text-dark-accent transition-colors"
-                style={location.pathname === link.path ? activeLinkStyle : {}}
-                onClick={() => setIsOpen(false)}
-              >
-                {link.name}
-              </Link>
-            ))}
-          </div>
-        </motion.div>
-      )}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            key="mobile-menu"
+            id="mobile-menu"
+            ref={menuRef}
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.35, ease: 'easeInOut' }}
+            className="md:hidden bg-light-secondary dark:bg-dark-secondary pb-4 overflow-hidden border-t border-black/5 dark:border-white/10"
+            role="dialog"
+            aria-label="Mobile navigation"
+          >
+            <motion.div
+              initial="hidden"
+              animate="show"
+              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.05 } } }}
+              className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col space-y-3 pt-4"
+            >
+              {navLinks.map((link) => {
+                const active = location.pathname === link.path;
+                return (
+                  <motion.div key={link.path} variants={{ hidden: { y: 10, opacity: 0 }, show: { y: 0, opacity: 1 } }}>
+                    <Link
+                      to={link.path}
+                      className={`block font-medium px-2 py-2 rounded-md focus-ring transition-colors ${active ? 'bg-light-primary/60 dark:bg-dark-primary/60 text-light-accent dark:text-dark-accent' : 'text-light-text-secondary dark:text-dark-text-secondary hover:text-light-accent dark:hover:text-dark-accent'}`}
+                      style={active ? activeLinkStyle : {}}
+                    >
+                      {link.name}
+                    </Link>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.nav>
   );
 };

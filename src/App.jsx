@@ -6,17 +6,18 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 
-import Home from './pages/Home';
-import Activities from './pages/Activities';
-import Portfolio from './pages/Portfolio';
-import Blog from './pages/Blog';
-import BlogPost from './pages/BlogPost';
-import Research from './pages/Research';
-import Books from './pages/Books';
-import Projects from './pages/Projects';
-import About from './pages/About';
-import Contact from './pages/Contact';
-import NotFound from './pages/NotFound';
+import { lazy, Suspense } from 'react';
+const Home = lazy(() => import('./pages/Home'));
+const Activities = lazy(() => import('./pages/Activities'));
+const Portfolio = lazy(() => import('./pages/Portfolio'));
+const Blog = lazy(() => import('./pages/Blog'));
+const BlogPost = lazy(() => import('./pages/BlogPost'));
+const Research = lazy(() => import('./pages/Research'));
+const Books = lazy(() => import('./pages/Books'));
+const Projects = lazy(() => import('./pages/Projects'));
+const About = lazy(() => import('./pages/About'));
+const Contact = lazy(() => import('./pages/Contact'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 function App() {
   const location = useLocation();
@@ -26,6 +27,7 @@ function App() {
       <Navbar />
   <main id="main" className="flex-grow" tabIndex="-1">
         <AnimatePresence mode="wait">
+          <Suspense fallback={<div className="py-24 text-center text-light-text-secondary dark:text-dark-text-secondary">Loading...</div>}>
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Home />} />
             <Route path="/activities" element={<Activities />} />
@@ -39,6 +41,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          </Suspense>
         </AnimatePresence>
       </main>
       <Footer />
