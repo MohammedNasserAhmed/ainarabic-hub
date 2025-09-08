@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Menu, X, Bot } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
+import logo from '../../assets/website_logo.png';
 import { useTheme } from '../hooks/useTheme';
 import ThemeToggle from './ThemeToggle';
 
@@ -35,22 +36,40 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <Link to="/" className="flex items-center space-x-2">
-            <Bot className="h-8 w-8 text-light-accent dark:text-dark-accent" />
-            <span className="font-display text-2xl font-bold text-light-text-primary dark:text-dark-text-primary">aiNarabic</span>
+          <Link to="/" className="flex items-center space-x-2 group" aria-label="aiNarabic home">
+            <img
+              src={logo}
+              alt="aiNarabic logo"
+              className="h-9 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+              loading="eager"
+              decoding="async"
+            />
+            <span className="font-display text-2xl font-bold text-light-text-primary dark:text-dark-text-primary">
+              aiNarabic
+            </span>
           </Link>
-          <div className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className="font-medium text-light-text-secondary dark:text-dark-text-secondary hover:text-light-accent dark:hover:text-dark-accent transition-colors"
-                style={location.pathname === link.path ? activeLinkStyle : {}}
-                onClick={() => setIsOpen(false)}
-              >
-                {link.name}
-              </Link>
-            ))}
+          <div className="hidden md:flex items-center space-x-8 relative">
+            {navLinks.map((link) => {
+              const active = location.pathname === link.path;
+              return (
+                <div key={link.path} className="relative">
+                  <Link
+                    to={link.path}
+                    className={`font-medium px-1 pb-1 focus-ring transition-colors ${active ? 'text-light-accent dark:text-dark-accent' : 'text-light-text-secondary dark:text-dark-text-secondary hover:text-light-accent dark:hover:text-dark-accent'}`}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {link.name}
+                  </Link>
+                  {active && (
+                    <motion.span
+                      layoutId="nav-active"
+                      className="absolute left-0 -bottom-0.5 h-0.5 w-full rounded-full bg-light-accent dark:bg-dark-accent"
+                      transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                    />
+                  )}
+                </div>
+              );
+            })}
             <ThemeToggle />
           </div>
           <div className="md:hidden flex items-center">

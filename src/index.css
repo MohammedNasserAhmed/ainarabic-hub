@@ -25,4 +25,16 @@
     @apply bg-light-primary text-light-text-primary dark:bg-dark-primary dark:text-dark-text-primary;
     @apply transition-colors duration-300;
   }
+
+  .focus-ring:focus-visible {
+    @apply outline-none ring-2 ring-offset-2 ring-light-accent dark:ring-dark-accent ring-offset-light-primary dark:ring-offset-dark-primary;
+  }
+
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 bg-light-accent text-white dark:bg-dark-accent px-4 py-2 rounded-md shadow-card transition;
+  }
+
+  /* Hide scrollbar utility (still scrollable) */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 }

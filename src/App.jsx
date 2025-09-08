@@ -24,7 +24,7 @@ function App() {
   return (
     <div className="flex flex-col min-h-screen font-sans">
       <Navbar />
-      <main className="flex-grow">
+  <main id="main" className="flex-grow" tabIndex="-1">
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Home />} />
