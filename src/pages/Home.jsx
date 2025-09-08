@@ -1,5 +1,6 @@
 // src/pages/Home.jsx
 import React, { useEffect, useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { Cpu, FlaskConical, BookOpen, ArrowRight } from 'lucide-react';
@@ -12,6 +13,7 @@ import heroVideo from '../../assets/home-intro.mp4';
 import heroPoster from '/website-screenshot.png';
 
 const Home = ({ onNavigate }) => {
+  const navigate = useNavigate();
   const featured = [
     { icon: <Cpu size={40} className="text-light-accent dark:text-dark-accent" />, title: 'AI Projects', description: 'Explore our innovative AI solutions and case studies.', link: '/projects' },
     { icon: <FlaskConical size={40} className="text-light-accent dark:text-dark-accent" />, title: 'Cutting-Edge Research', description: 'Read our latest publications and research findings.', link: '/research' },
@@ -19,8 +21,8 @@ const Home = ({ onNavigate }) => {
   ];
 
   const handleNavigation = (e, path) => {
-      e.preventDefault();
-      onNavigate(path);
+    e.preventDefault();
+    if (onNavigate) onNavigate(path); else navigate(path);
   };
 
   // Respect reduced motion: track dynamically & provide memo value
