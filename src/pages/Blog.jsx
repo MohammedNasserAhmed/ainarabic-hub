@@ -1,16 +1,15 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
+import { staggerContainer, fadeLift } from '../components/animationVariants';
 import AnimatedPage from '../components/AnimatedPage';
 import SectionHeader from '../components/SectionHeader';
 import { mockData } from '../data/mockData';
 import { ArrowRight } from 'lucide-react';
+import Skeleton from '../components/Skeleton';
 import { Link } from 'react-router-dom';
 
-const cardVariants = {
-  hidden: { y: 24, opacity: 0 },
-  show: { y: 0, opacity: 1 }
-};
+const cardVariants = fadeLift;
 
 const estimateReadingTime = (html) => {
   const text = html.replace(/<[^>]+>/g, ' ');
@@ -20,6 +19,11 @@ const estimateReadingTime = (html) => {
 
 const Blog = () => {
   const [posts] = useState(mockData.blog);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const t = setTimeout(() => setLoading(false), 1200);
+    return () => clearTimeout(t);
+  }, []);
   const enriched = useMemo(() => posts.map(p => ({ ...p, readingTime: estimateReadingTime(p.content) })), [posts]);
   const [progress, setProgress] = useState(0);
 
@@ -54,20 +58,20 @@ const Blog = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-20">
         <SectionHeader title="Our Blog" subtitle="Insights, tutorials, and news from the forefront of AI." />
 
-        {enriched.length > 0 && (
+  {!loading && enriched.length > 0 && (
           <div className="mb-16">
             <div className="grid gap-10 md:grid-cols-2 items-stretch">
               <Link to={`/blog/${enriched[0].slug}`} className="group relative rounded-2xl overflow-hidden bg-light-secondary/70 dark:bg-dark-secondary/70 shadow-card hover:shadow-card-hover ring-1 ring-black/5 dark:ring-white/5 backdrop-blur-sm transition-all focus-ring">
-                <div className="absolute inset-0">
+                <motion.div layoutId={`post-image-${enriched[0].id}`} className="absolute inset-0">
                   <img src={enriched[0].image} alt={enriched[0].title} className="w-full h-full object-cover opacity-80 group-hover:opacity-90 transition-opacity" loading="lazy" />
                   <div className="absolute inset-0 bg-gradient-to-tr from-black/70 via-black/30 to-transparent" />
-                </div>
+                </motion.div>
                 <div className="relative p-8 md:p-10 flex flex-col justify-end h-full">
                   <div className="mb-4 inline-flex items-center gap-2 text-[11px] uppercase tracking-wide font-semibold text-light-accent/90 dark:text-dark-accent/90">
                     Featured
                     <span className="w-1.5 h-1.5 rounded-full bg-light-accent dark:bg-dark-accent animate-pulse" />
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-4 leading-tight drop-shadow-md">{enriched[0].title}</h2>
+                  <motion.h2 layoutId={`post-title-${enriched[0].id}`} className="text-2xl md:text-3xl font-display font-bold text-white mb-4 leading-tight drop-shadow-md">{enriched[0].title}</motion.h2>
                   <p className="text-sm md:text-base text-white/80 line-clamp-3 mb-6 max-w-2xl">{enriched[0].description}</p>
                   <div className="flex flex-wrap items-center gap-4 text-xs text-white/70">
                     <span>{enriched[0].date}</span>
@@ -99,11 +103,13 @@ const Blog = () => {
           </div>
         )}
 
+        {!loading && (
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.08 } } }}
+          variants={staggerContainer}
           initial="hidden"
-            animate="show"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
         >
           {enriched.slice(5).map(post => (
             <motion.div key={post.id} variants={cardVariants}>
@@ -122,7 +128,23 @@ const Blog = () => {
               </Link>
             </motion.div>
           ))}
-        </motion.div>
+        </motion.div>) }
+
+        {loading && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" aria-busy="true" aria-live="polite">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="rounded-xl bg-light-secondary/70 dark:bg-dark-secondary/70 ring-1 ring-black/5 dark:ring-white/5 p-0 overflow-hidden backdrop-blur-sm">
+                <Skeleton className="h-56 w-full" />
+                <div className="p-6 space-y-3">
+                  <Skeleton className="h-4 w-2/3" />
+                  <Skeleton className="h-3 w-full" />
+                  <Skeleton className="h-3 w-5/6" />
+                  <Skeleton className="h-3 w-1/2" />
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </AnimatedPage>
   );

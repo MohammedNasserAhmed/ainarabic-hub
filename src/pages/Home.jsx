@@ -1,5 +1,5 @@
 // src/pages/Home.jsx
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { Cpu, FlaskConical, BookOpen, ArrowRight } from 'lucide-react';
@@ -23,15 +23,16 @@ const Home = ({ onNavigate }) => {
       onNavigate(path);
   };
 
+  // Respect reduced motion: track dynamically & provide memo value
   const [allowVideo, setAllowVideo] = useState(true);
+  const prefersReduced = useMemo(() => typeof window !== 'undefined' && !allowVideo, [allowVideo]);
   useEffect(() => {
     const media = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (media.matches) setAllowVideo(false);
-    const handler = () => setAllowVideo(!media.matches);
-    media.addEventListener ? media.addEventListener('change', handler) : media.addListener(handler);
-    return () => {
-      media.removeEventListener ? media.removeEventListener('change', handler) : media.removeListener(handler);
-    };
+    const apply = () => setAllowVideo(!media.matches);
+    apply();
+    const handler = () => apply();
+    if (media.addEventListener) media.addEventListener('change', handler); else media.addListener(handler);
+    return () => { if (media.removeEventListener) media.removeEventListener('change', handler); else media.removeListener(handler); };
   }, []);
 
   return (
@@ -57,6 +58,23 @@ const Home = ({ onNavigate }) => {
           />
         ) : (
           <img src={heroPoster} alt="AI thematic hero" className="absolute inset-0 w-full h-full object-cover" />
+        )}
+        {/* Parallax glow blobs (disabled if prefers reduced motion) */}
+        {!prefersReduced && (
+          <>
+            <motion.div
+              className="absolute -top-24 -left-24 w-[480px] h-[480px] rounded-full bg-gradient-to-br from-orange-400/25 via-amber-300/10 to-transparent blur-3xl"
+              animate={{ x: [0, 40, -20, 0], y: [0, 30, 10, 0], rotate: [0, 25, -10, 0] }}
+              transition={{ duration: 26, repeat: Infinity, ease: 'linear' }}
+              style={{ mixBlendMode: 'screen' }}
+            />
+            <motion.div
+              className="absolute bottom-[-180px] right-[-120px] w-[520px] h-[520px] rounded-full bg-gradient-to-tr from-amber-500/20 via-yellow-300/10 to-transparent blur-3xl"
+              animate={{ x: [0, -30, 15, 0], y: [0, -20, 25, 0], rotate: [0, -20, 15, 0] }}
+              transition={{ duration: 32, repeat: Infinity, ease: 'linear' }}
+              style={{ mixBlendMode: 'screen' }}
+            />
+          </>
         )}
         {/* Overlays for readability */}
         <div className="absolute inset-0 bg-gradient-to-r from-dark-primary/80 via-dark-primary/50 to-dark-primary/10 dark:from-black/75 dark:via-black/50 dark:to-black/20 pointer-events-none" />

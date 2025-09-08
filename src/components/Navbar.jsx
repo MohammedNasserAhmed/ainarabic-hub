@@ -1,8 +1,9 @@
 // src/components/Navbar.jsx
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import { useScrollDirection } from '../hooks/useScrollDirection';
 import logo from '../../assets/website_logo.png';
 import { useTheme } from '../hooks/useTheme';
 import ThemeToggle from './ThemeToggle';
@@ -13,6 +14,8 @@ const Navbar = () => {
   const { theme } = useTheme();
   const menuRef = useRef(null);
   const openButtonRef = useRef(null);
+  // Scroll direction for hide-on-scroll behavior
+  const scrollDir = useScrollDirection();
   const location = useLocation();
 
   useEffect(() => {
@@ -60,10 +63,11 @@ const Navbar = () => {
 
   return (
     <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-      className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-light-primary/80 dark:bg-dark-primary/80 backdrop-blur-lg shadow-md' : 'bg-transparent'}`}
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.45, ease: 'easeOut' }}
+      className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-light-primary/70 dark:bg-dark-primary/70 backdrop-blur-xl shadow-md ring-1 ring-black/5 dark:ring-white/10' : 'bg-transparent'} ${scrollDir === 'down' && isScrolled ? '-translate-y-[72px]' : 'translate-y-0'}`}
+      style={{ willChange: 'transform, backdrop-filter' }}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
@@ -94,8 +98,8 @@ const Navbar = () => {
                   {active && (
                     <motion.span
                       layoutId="nav-active"
-                      className="absolute left-0 -bottom-0.5 h-0.5 w-full rounded-full bg-light-accent dark:bg-dark-accent"
-                      transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                      className="absolute left-0 -bottom-0.5 h-0.5 w-full rounded-full bg-light-accent dark:bg-dark-accent origin-left"
+                      transition={{ type: 'spring', stiffness: 500, damping: 32, mass: 0.4 }}
                     />
                   )}
                 </div>

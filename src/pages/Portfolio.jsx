@@ -98,11 +98,11 @@ const Portfolio = () => {
         role="button"
         tabIndex={0}
               >
-                <div className="overflow-hidden">
+                <motion.div layoutId={`portfolio-image-${item.id}`} className="overflow-hidden">
                   <img src={item.image} alt={item.title + ' showcase'} className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-[1.05]" loading="lazy" />
-                </div>
+                </motion.div>
                 <div className="p-6">
-                  <h3 className="text-lg font-bold font-display mb-2 leading-snug">{item.title}</h3>
+                  <motion.h3 layoutId={`portfolio-title-${item.id}`} className="text-lg font-bold font-display mb-2 leading-snug">{item.title}</motion.h3>
                   <p className="text-light-text-secondary dark:text-dark-text-secondary text-sm mb-4 line-clamp-3">{item.description}</p>
                   <div className="flex flex-wrap gap-2">
                     {item.tags.map(tag => (

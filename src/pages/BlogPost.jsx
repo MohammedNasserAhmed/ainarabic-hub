@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { motion } from 'framer-motion';
 import { Calendar, User, ArrowLeft } from 'lucide-react';
 import { mockData } from '../data/mockData';
 import AnimatedPage from '../components/AnimatedPage';
@@ -60,16 +61,16 @@ const BlogPost = () => {
             Back to Blog
           </Link>
           <header className="mb-10">
-            <h1 className="text-4xl md:text-5xl font-bold font-display mb-6 leading-tight">{post.title}</h1>
+            <motion.h1 layoutId={`post-title-${post.id}`} className="text-4xl md:text-5xl font-bold font-display mb-6 leading-tight">{post.title}</motion.h1>
             <div className="flex flex-wrap items-center gap-6 text-light-text-secondary dark:text-dark-text-secondary text-sm">
               <span className="inline-flex items-center"><User size={16} className="mr-2" /> {post.author}</span>
               <span className="inline-flex items-center"><Calendar size={16} className="mr-2" /> {post.date}</span>
               <span className="inline-flex items-center">{readingTime} min read</span>
             </div>
           </header>
-          <figure className="mb-10 rounded-xl overflow-hidden shadow-card ring-1 ring-black/5 dark:ring-white/10">
+          <motion.figure layoutId={`post-image-${post.id}`} className="mb-10 rounded-xl overflow-hidden shadow-card ring-1 ring-black/5 dark:ring-white/10">
             <img src={post.image} alt={post.title} className="w-full h-auto object-cover" loading="lazy" />
-          </figure>
+          </motion.figure>
           <article id="article-content" className="prose dark:prose-invert max-w-none text-lg leading-relaxed">
             <div dangerouslySetInnerHTML={{ __html: post.content }} />
           </article>
