@@ -1,5 +1,5 @@
 // src/pages/Home.jsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { Cpu, FlaskConical, BookOpen, ArrowRight } from 'lucide-react';
@@ -9,6 +9,7 @@ import SectionHeader from '../components/SectionHeader';
 import Card from '../components/Card';
 // Video asset
 import heroVideo from '../../assets/home-intro.mp4';
+import heroPoster from '/website-screenshot.png';
 
 const Home = ({ onNavigate }) => {
   const featured = [
@@ -22,6 +23,17 @@ const Home = ({ onNavigate }) => {
       onNavigate(path);
   };
 
+  const [allowVideo, setAllowVideo] = useState(true);
+  useEffect(() => {
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (media.matches) setAllowVideo(false);
+    const handler = () => setAllowVideo(!media.matches);
+    media.addEventListener ? media.addEventListener('change', handler) : media.addListener(handler);
+    return () => {
+      media.removeEventListener ? media.removeEventListener('change', handler) : media.removeListener(handler);
+    };
+  }, []);
+
   return (
     <AnimatedPage>
       <Helmet>
@@ -31,16 +43,21 @@ const Home = ({ onNavigate }) => {
       
       <section className="relative h-[520px] md:h-[620px] flex items-stretch overflow-hidden">
         {/* Background video */}
-        <video
-          className="absolute inset-0 w-full h-full object-cover"
-          src={heroVideo}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-label="Introductory AI showcase video"
-        />
+        {allowVideo ? (
+          <video
+            className="absolute inset-0 w-full h-full object-cover"
+            src={heroVideo}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster={heroPoster}
+            aria-label="Introductory AI showcase video"
+          />
+        ) : (
+          <img src={heroPoster} alt="AI thematic hero" className="absolute inset-0 w-full h-full object-cover" />
+        )}
         {/* Overlays for readability */}
         <div className="absolute inset-0 bg-gradient-to-r from-dark-primary/80 via-dark-primary/50 to-dark-primary/10 dark:from-black/75 dark:via-black/50 dark:to-black/20 pointer-events-none" />
         <div className="absolute inset-0 backdrop-blur-[2px] md:backdrop-blur-sm" />
@@ -65,18 +82,12 @@ const Home = ({ onNavigate }) => {
               >
                 At aiNarabic, we build intelligent systems that solve complex problems and drive innovation across industries.
               </motion.p>
-              <motion.div
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.3 }}
-                className="flex flex-wrap gap-4"
-              >
-                <a
-                  href="/about"
-                  onClick={(e) => handleNavigation(e, '/about')}
-                  className="inline-flex items-center justify-center px-8 py-3 text-base font-semibold rounded-md text-white bg-light-accent hover:bg-light-accent-hover dark:bg-dark-accent dark:hover:bg-dark-accent-hover transition-colors shadow-lg shadow-black/30"
-                >
+              <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.3 }} className="flex flex-wrap gap-4">
+                <a href="/about" onClick={(e) => handleNavigation(e, '/about')} className="inline-flex items-center justify-center px-8 py-3 text-base font-semibold rounded-md text-white bg-light-accent hover:bg-light-accent-hover dark:bg-dark-accent dark:hover:bg-dark-accent-hover transition-colors shadow-lg shadow-black/30 focus-ring">
                   Learn More <ArrowRight className="ml-2 -mr-1 h-5 w-5" />
+                </a>
+                <a href="/projects" onClick={(e) => handleNavigation(e, '/projects')} className="inline-flex items-center justify-center px-8 py-3 text-base font-semibold rounded-md bg-light-secondary/70 dark:bg-dark-secondary/70 text-light-text-primary dark:text-dark-text-primary hover:bg-light-secondary dark:hover:bg-dark-secondary transition-colors shadow-lg shadow-black/20 focus-ring ring-1 ring-black/5 dark:ring-white/10">
+                  View Projects
                 </a>
               </motion.div>
             </div>
