@@ -5,24 +5,18 @@ import { Target, Eye } from 'lucide-react';
 import AnimatedPage from '../components/AnimatedPage';
 import SectionHeader from '../components/SectionHeader';
 
-const teamMembers = [
-  { name: 'Dr. Aisha Al-Farsi', role: 'Founder & CEO', image: 'https://placehold.co/400x400/D97706/FFFFFF?text=AA' },
-  { name: 'Yusuf Ahmed', role: 'Lead AI Engineer', image: 'https://placehold.co/400x400/10B981/FFFFFF?text=YA' },
-  { name: 'Fatima Khan', role: 'Senior UX Designer', image: 'https://placehold.co/400x400/F59E0B/FFFFFF?text=FK' },
-];
-
 const About = () => {
   return (
     <AnimatedPage>
       <Helmet>
         <title>About Us | aiNarabic</title>
-        <meta name="description" content="Learn about aiNarabic's mission, vision, and the team driving AI innovation." />
+        <meta name="description" content="Learn about aiNarabic, a startup founded in 2022, focusing on GenAI solutions for the Arabic-speaking world. Discover our mission, vision, and our team of experts." />
       </Helmet>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <SectionHeader title="About aiNarabic" subtitle="We are a team of passionate innovators dedicated to advancing Artificial Intelligence." />
+        <SectionHeader title="About aiNarabic" subtitle="Building advanced GenAI solutions for the private and governmental sectors with a focus on the Arabic language. Founded in 2022, we are now expanding to the Arabic region." />
         <div className="grid md:grid-cols-2 gap-16 items-center mb-20">
           <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
-            <img src="https://placehold.co/800x600/1F2937/FFFFFF?text=Team+Collaboration" alt="Our Team" className="rounded-lg shadow-2xl" />
+            <img src="https://placehold.co/800x600/1F2937/FFFFFF?text=AI+Solutions" alt="AI Solutions" className="rounded-lg shadow-2xl" />
           </motion.div>
           <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
             <div className="space-y-8">
@@ -33,7 +27,7 @@ const About = () => {
                 <div>
                   <h3 className="text-xl font-bold font-display">Our Mission</h3>
                   <p className="text-light-text-secondary dark:text-dark-text-secondary mt-1">
-                    To democratize access to cutting-edge AI technologies and create intelligent solutions that empower businesses and individuals in the Arabic-speaking world and beyond.
+                    To build generative AI solutions that fill the gap in the Arabic market, focusing on high-accuracy models for Arabic voice and text to empower businesses and individuals in the Arabic-speaking world.
                   </p>
                 </div>
               </div>
@@ -44,7 +38,7 @@ const About = () => {
                 <div>
                   <h3 className="text-xl font-bold font-display">Our Vision</h3>
                   <p className="text-light-text-secondary dark:text-dark-text-secondary mt-1">
-                    To be a leading force in AI research and development, recognized for our ethical approach, innovation, and commitment to creating a positive impact on society.
+                    To be a leading force in Arabic AI, bridging the technological gap and driving innovation with powerful, accessible, and ethically-developed generative AI solutions for the region.
                   </p>
                 </div>
               </div>
@@ -52,15 +46,20 @@ const About = () => {
           </motion.div>
         </div>
         <div className="bg-light-secondary dark:bg-dark-secondary py-20 rounded-lg">
-          <SectionHeader title="Meet the Team" subtitle="The minds behind our success." />
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            {teamMembers.map((member, index) => (
-              <motion.div key={member.name} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: index * 0.1 }} className="text-center">
-                <img src={member.image} alt={member.name} className="w-32 h-32 rounded-full mx-auto mb-4 shadow-lg" />
-                <h4 className="text-lg font-bold">{member.name}</h4>
-                <p className="text-light-accent dark:text-dark-accent">{member.role}</p>
-              </motion.div>
-            ))}
+          <SectionHeader title="Meet the Team" subtitle="Our team of 7 passionate experts is led by our co-founder." />
+          <div className="flex justify-center">
+            <motion.div
+              key="M. N. Gaber, PhD"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="text-center"
+            >
+              <img src="https://placehold.co/400x400/D97706/FFFFFF?text=MG" alt="M. N. Gaber, PhD" className="w-32 h-32 rounded-full mx-auto mb-4 shadow-lg" />
+              <h4 className="text-lg font-bold">M. N. Gaber, PhD</h4>
+              <p className="text-light-accent dark:text-dark-accent">Co-founder & CEO</p>
+            </motion.div>
           </div>
         </div>
       </div>
